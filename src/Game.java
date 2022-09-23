@@ -48,7 +48,9 @@ public class Game {
 		boolean keepGoing = true;
 		printStartRoundMessage(whoseTurn);
 		while(keepGoing){
-			int roll = die.nextInt(7);
+			// Buggy Code: int roll = die.nextInt(7);
+			// Cause of Error: The die object uses nextInt(7), which generates a random number in the range 0 to 6.
+			int roll = die.nextInt(7 - 1) + 1;
 			String spin = spinner.spin();
 			System.out.println(roll+ " "+ spin);
 			
