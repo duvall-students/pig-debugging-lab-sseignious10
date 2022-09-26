@@ -25,6 +25,10 @@ public class Game {
 	public void playGame(){
 		printStartGameMessage();
 		Player whoseTurn = player1;
+		// Fixes bug #4
+		if(winner()) {
+			printEndGameMessage();
+		}
 		while(!winner()){
 			int roundScore = takeATurn(whoseTurn);
 			whoseTurn.addToScore(roundScore);

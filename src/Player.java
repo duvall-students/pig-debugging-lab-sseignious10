@@ -3,7 +3,7 @@ public abstract class Player {
 
 	protected String myName;
 	protected int myScore;
-	private final int WIN_SCORE = 100;
+	private final int WIN_SCORE = 20;
 	
 	public Player(String myName){
 		myScore = 0;
