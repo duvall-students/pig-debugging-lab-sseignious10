@@ -56,6 +56,11 @@ public class Game {
 			
 			if(roll == LOSER_ROLL){
 				System.out.println("Lose a turn.");
+				// Cause of Error: When player rolls a 1, the game returns 0 and breaks before it can check if the spin is "GRUNT"
+				if(spin.equals(LOSER_SPIN.toUpperCase())){ 
+					System.out.println("Too bad!  Lose all your points.");
+					whoseTurn.resetScore();
+				}
 				return 0;
 			}
 			// Buggy Code: else if(spin == LOSER_SPIN.toUpperCase()){
