@@ -1,16 +1,20 @@
 import java.util.Random;
 
 public class Game {
-	private Player player1;
-	private Player player2;
+	// New code to fix #1
+	private Player player1 = new GUIPlayer();
+	private Player player2 = new ComputerPlayer();
 	private Random die;
 	private Spinner spinner;
 	private final String LOSER_SPIN = "grunt";
 	private final int LOSER_ROLL = 1;
 	
 	public Game(){
-		Player player1 = new GUIPlayer();
-		Player player2 = new ComputerPlayer();
+		/* Buggy Code: Player player1 = new GUIPlayer();
+		 * Player player2 = new ComputerPlayer();
+		 * Cause of Error: Variables player1 and player2 must be declared and assigned initially, 
+		 * otherwise, they will be null, causing a nullPointerException. */
+		
 		die = new Random();
 		spinner = new Spinner();
 	}
