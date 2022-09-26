@@ -58,7 +58,9 @@ public class Game {
 				System.out.println("Lose a turn.");
 				return 0;
 			}
-			else if(spin == LOSER_SPIN.toUpperCase()){
+			// Buggy Code: else if(spin == LOSER_SPIN.toUpperCase()){
+			// Cause of Error: Since spin and LOSER_SPIN are String object types, .equals must be used instead of == to check for EQUIVALENCY
+			else if(spin.equals(LOSER_SPIN.toUpperCase())){
 				System.out.println("Too bad!  Lose all your points.");
 				whoseTurn.resetScore();
 				return 0;
@@ -74,7 +76,9 @@ public class Game {
 	
 	// True if one of the players has won the game.
 	public boolean winner(){
-		return player1.hasWon() && player2.hasWon();
+		// Buggy Code: return player1.hasWon() && player2.hasWon();
+		// Cause of Error: Code will only return true if both players have a score higher than 100
+		return player1.hasWon() || player2.hasWon();
 	}
 	
 	/* 
