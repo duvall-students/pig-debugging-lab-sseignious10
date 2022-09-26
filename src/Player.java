@@ -17,8 +17,6 @@ public abstract class Player {
 	}
 	
 	public boolean hasWon(){
-		System.out.println(myScore);
-		System.out.println(myScore >= WIN_SCORE);
 		return myScore >= WIN_SCORE;
 	}
 	
