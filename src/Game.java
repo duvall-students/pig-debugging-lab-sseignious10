@@ -1,16 +1,20 @@
 import java.util.Random;
 
 public class Game {
-	private Player player1;
-	private Player player2;
+	// New code to fix #1
+	private Player player1 = new GUIPlayer();
+	private Player player2 = new ComputerPlayer();
 	private Random die;
 	private Spinner spinner;
 	private final String LOSER_SPIN = "grunt";
 	private final int LOSER_ROLL = 1;
 	
 	public Game(){
-		Player player1 = new GUIPlayer();
-		Player player2 = new ComputerPlayer();
+		/* Buggy Code: Player player1 = new GUIPlayer();
+		 * Player player2 = new ComputerPlayer();
+		 * Cause of Error: Variables player1 and player2 must be declared and assigned initially, 
+		 * otherwise, they will be null, causing a nullPointerException. */
+		
 		die = new Random();
 		spinner = new Spinner();
 	}
@@ -21,6 +25,10 @@ public class Game {
 	public void playGame(){
 		printStartGameMessage();
 		Player whoseTurn = player1;
+		// Fixes bug #4
+		if(winner()) {
+			printEndGameMessage();
+		}
 		while(!winner()){
 			int roundScore = takeATurn(whoseTurn);
 			whoseTurn.addToScore(roundScore);
@@ -48,15 +56,24 @@ public class Game {
 		boolean keepGoing = true;
 		printStartRoundMessage(whoseTurn);
 		while(keepGoing){
-			int roll = die.nextInt(7);
+			// Buggy Code: int roll = die.nextInt(7);
+			// Cause of Error: The die object uses nextInt(7), which generates a random number in the range 0 to 6.
+			int roll = die.nextInt(7 - 1) + 1;
 			String spin = spinner.spin();
 			System.out.println(roll+ " "+ spin);
 			
 			if(roll == LOSER_ROLL){
 				System.out.println("Lose a turn.");
+				// Cause of Error: When player rolls a 1, the game returns 0 and breaks before it can check if the spin is "GRUNT"
+				if(spin.equals(LOSER_SPIN.toUpperCase())){ 
+					System.out.println("Too bad!  Lose all your points.");
+					whoseTurn.resetScore();
+				}
 				return 0;
 			}
-			else if(spin == LOSER_SPIN.toUpperCase()){
+			// Buggy Code: else if(spin == LOSER_SPIN.toUpperCase()){
+			// Cause of Error: Since spin and LOSER_SPIN are String object types, .equals must be used instead of == to check for EQUIVALENCY
+			else if(spin.equals(LOSER_SPIN.toUpperCase())){
 				System.out.println("Too bad!  Lose all your points.");
 				whoseTurn.resetScore();
 				return 0;
@@ -72,7 +89,9 @@ public class Game {
 	
 	// True if one of the players has won the game.
 	public boolean winner(){
-		return player1.hasWon() && player2.hasWon();
+		// Buggy Code: return player1.hasWon() && player2.hasWon();
+		// Cause of Error: Code will only return true if both players have a score higher than 100
+		return player1.hasWon() || player2.hasWon();
 	}
 	
 	/* 

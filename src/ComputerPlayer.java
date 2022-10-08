@@ -3,7 +3,9 @@ public class ComputerPlayer extends Player{
 	private final int MIN_POINTS = 15;
 	
 	public ComputerPlayer(){
+		// Cause of Error: myName variable must be assigned new value for computer player
 		super("R2D2");
+		myName = "R2D2";
 	}
 
 	@Override
